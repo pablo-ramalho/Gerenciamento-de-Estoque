@@ -41,10 +41,10 @@ public class Produto implements Comparable<Produto>{
     @Override
     public String toString(){
         return 
-        "Nome do produto: " + getName() + "\n" +
-        "Preço: " + getPrice() + "\n" +
-        "Peso:" + getWeight() + "\n" +
-        "Estoque: " + getStock() + "\n";
+        "Nome: " + getName() + "\n" +
+        "Preço: R$" + getPrice() + "\n" +
+        "Peso:" + getWeight() + "g" + "\n" +
+        "Estoque: " + getStock() + "unidades" + "\n";
     }
 
     /**
