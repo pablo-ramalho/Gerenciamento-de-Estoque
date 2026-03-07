@@ -268,16 +268,7 @@ public class Gui extends JFrame{
     }
     
     private void removerProduto(){
-
-        if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty())){
-            this.resetarCampos();
-
-            // TODO IMPLEMENTAR LÓGICA AO REMOVER PRODUTO
-
-        }else{
-            // TODO IMPLEMENTAR LÓGICA PARA TRATAR O CASO DE UM CAMPO ESTAR EM BRANCO OU ESTAR COM O FORMATO INCORRETO
-
-        }
+        // TODO IMPLEMENTAR LÓGICA AO REMOVER PRODUTO
 
     }
 
