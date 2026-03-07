@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 public class Gui extends JFrame{
 
@@ -59,7 +60,7 @@ public class Gui extends JFrame{
 
         //  CONFIGURAÇÃO DOS PAINÉIS
         leftPanel = new JPanel(new GridLayout(2, 1));
-        rightPanel = new JPanel(new BorderLayout());
+        
 
         buttonSection = new JPanel(gridBagLayout);
         gbc.weightx = 0.25;
@@ -79,6 +80,8 @@ public class Gui extends JFrame{
         gbc.fill = GridBagConstraints.VERTICAL;
 
         leftPanel.add(textFieldSection, BorderLayout.CENTER);
+        
+        rightPanel = new JPanel(new BorderLayout());
         
         // TODO Fazer a tabela no painel direito
         productGridSection = new JPanel(new FlowLayout());
@@ -245,11 +248,25 @@ public class Gui extends JFrame{
     private void adicionarProduto(){
 
         if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty())){
+            Produto novoProduto;
+
+            try{    
+                novoProduto = new Produto(nameField.getText(), Float.parseFloat(priceField.getText()), Integer.parseInt(weightField.getText()), Integer.parseInt(stockField.getText()));
+
+                if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty()))
+                    JOptionPane.showMessageDialog(this, "Novo produto adicionado com êxito:\n" + novoProduto, "Novo produto", JOptionPane.INFORMATION_MESSAGE);
+            
+            }catch(NumberFormatException nfe){
+                JOptionPane.showMessageDialog(this, "Existem campos vazios. Por favor, preencha-os adequadamente", "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
+
+            }
+
             this.resetarCampos();
 
             // TODO IMPLEMENTAR LÓGICA AO ADICIONAR O PRODUTO
 
         }else{
+            
             // TODO IMPLEMENTAR LÓGICA PARA TRATAR O CASO DE UM CAMPO ESTAR EM BRANCO OU ESTAR COM O FORMATO INCORRETO
 
         }
