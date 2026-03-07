@@ -62,7 +62,6 @@ public class Gui extends JFrame{
         rightPanel = new JPanel(new BorderLayout());
 
         buttonSection = new JPanel(gridBagLayout);
-        buttonSection.setBackground(Color.CYAN);
         gbc.weightx = 0.25;
         gbc.weighty = 0.5;
         gbc.gridx = 0;
@@ -73,7 +72,6 @@ public class Gui extends JFrame{
         
         textFieldSection = new JPanel(gridBagLayout);
         textFieldSection.setPreferredSize(new Dimension(getWidth() / 4, getHeight() / 2));
-        textFieldSection.setBackground(Color.GRAY);
         gbc.weightx = 0.25;
         gbc.weighty = 0.5;
         gbc.gridx = 0;
@@ -129,16 +127,19 @@ public class Gui extends JFrame{
         // TRATAMENTO DE EVENTOS
         addButton.addActionListener(e -> {
             System.out.println("Adicionar clicado");
+            this.adicionarProduto();
 
         });
 
         removeButton.addActionListener(e -> {
            System.out.println("Remover clicado");
+           this.removerProduto();
             
         });
 
         importButton.addActionListener(e -> {
-            System.out.println("Exibir clicado");
+            System.out.println("Importar clicado");
+            this.importarDados();
 
         });
 
@@ -210,7 +211,6 @@ public class Gui extends JFrame{
                 // IMPEDE QUE O USUÁRIO APAGUE O PLACEHOLDER
                 if(campo.getText().equals(placeHolder) && (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE))
                     e.consume();
-                
 
             }
 
@@ -226,6 +226,53 @@ public class Gui extends JFrame{
             }
 
         });
+
+    }
+
+    private void resetarCampos(){
+        nameField.setText("Nome do produto");
+        priceField.setText("Preço unitário");
+        weightField.setText("Peso por unidade");
+        stockField.setText("Estoque disponível");
+        
+        nameField.setForeground(Color.GRAY);
+        priceField.setForeground(Color.GRAY);
+        weightField.setForeground(Color.GRAY);
+        stockField.setForeground(Color.GRAY);
+
+    }
+
+    private void adicionarProduto(){
+
+        if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty())){
+            this.resetarCampos();
+
+            // TODO IMPLEMENTAR LÓGICA AO ADICIONAR O PRODUTO
+
+        }else{
+            // TODO IMPLEMENTAR LÓGICA PARA TRATAR O CASO DE UM CAMPO ESTAR EM BRANCO OU ESTAR COM O FORMATO INCORRETO
+
+        }
+
+    }
+    
+    private void removerProduto(){
+
+        if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty())){
+            this.resetarCampos();
+
+            // TODO IMPLEMENTAR LÓGICA AO REMOVER PRODUTO
+
+        }else{
+            // TODO IMPLEMENTAR LÓGICA PARA TRATAR O CASO DE UM CAMPO ESTAR EM BRANCO OU ESTAR COM O FORMATO INCORRETO
+
+        }
+
+    }
+
+    //  TODO IMPLEMENTAR LÓGICA PARA IMPORTAR DADOS DE FONTES EXTERNAS (ARQUIVOS .csv OU BANCO DE DADOS)
+    private void importarDados(){
+
 
     }
     
