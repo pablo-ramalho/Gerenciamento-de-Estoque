@@ -247,29 +247,23 @@ public class Gui extends JFrame{
 
     private void adicionarProduto(){
 
-        if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty())){
-            Produto novoProduto;
+        Produto novoProduto;
 
-            try{    
-                novoProduto = new Produto(nameField.getText(), Float.parseFloat(priceField.getText()), Integer.parseInt(weightField.getText()), Integer.parseInt(stockField.getText()));
+        try{    
+            novoProduto = new Produto(nameField.getText(), Float.parseFloat(priceField.getText()), Integer.parseInt(weightField.getText()), Integer.parseInt(stockField.getText()));
 
-                if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty()))
-                    JOptionPane.showMessageDialog(this, "Novo produto adicionado com êxito:\n" + novoProduto, "Novo produto", JOptionPane.INFORMATION_MESSAGE);
+            if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty()))
+                JOptionPane.showMessageDialog(this, "Novo produto adicionado com êxito:\n" + novoProduto, "Novo produto", JOptionPane.INFORMATION_MESSAGE);
             
-            }catch(NumberFormatException nfe){
-                JOptionPane.showMessageDialog(this, "Existem campos vazios. Por favor, preencha-os adequadamente", "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
-
-            }
-
-            this.resetarCampos();
-
-            // TODO IMPLEMENTAR LÓGICA AO ADICIONAR O PRODUTO
-
-        }else{
-            
-            // TODO IMPLEMENTAR LÓGICA PARA TRATAR O CASO DE UM CAMPO ESTAR EM BRANCO OU ESTAR COM O FORMATO INCORRETO
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this, "Existem campos vazios. Por favor, preencha-os adequadamente", "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
 
         }
+
+        this.resetarCampos();
+
+        // TODO IMPLEMENTAR LÓGICA AO ADICIONAR O PRODUTO
+
 
     }
     
