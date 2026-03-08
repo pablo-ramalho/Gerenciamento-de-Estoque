@@ -43,8 +43,8 @@ public class Produto implements Comparable<Produto>{
         return 
         "Nome: " + getName() + "\n" +
         "Preço: R$" + getPrice() + "\n" +
-        "Peso:" + getWeight() + "g" + "\n" +
-        "Estoque: " + getStock() + "unidades" + "\n";
+        "Peso: " + getWeight() + "g" + "\n" +
+        "Estoque: " + getStock() + " unidades" + "\n";
     }
 
     /**
