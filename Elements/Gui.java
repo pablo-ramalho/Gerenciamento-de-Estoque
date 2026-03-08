@@ -1,5 +1,4 @@
 package Elements;
-import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,11 +13,16 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
+import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class Gui extends JFrame{
 
@@ -44,6 +48,9 @@ public class Gui extends JFrame{
 
     private JPanel productGridSection;
     private JScrollPane scroller;
+    private List<Produto> listaDeProdutos;
+    private Tabela tableModel;
+    private JTable productGrid;
     
     public Gui(){
         gbc = new GridBagConstraints();
@@ -51,6 +58,13 @@ public class Gui extends JFrame{
         fonteBotao = new Font("Arial", Font.BOLD, 36);
         fonteCampo = new Font("Arial", Font.PLAIN, 24);
         corBotao = new Color(64, 224, 208);
+        productGrid = new JTable(tableModel);
+        leftPanel = new JPanel(new GridLayout(2, 1));
+        rightPanel = new JPanel(new BorderLayout());
+        scroller = new JScrollPane();
+        listaDeProdutos = new ArrayList<>();
+        tableModel = new Tabela(listaDeProdutos);
+        productGrid = new JTable(tableModel);
 
         setSize(1520, 1000);
         setLayout(new BorderLayout());
@@ -59,47 +73,12 @@ public class Gui extends JFrame{
         setLocationRelativeTo(null);
 
         //  CONFIGURAÇÃO DOS PAINÉIS
-        leftPanel = new JPanel(new GridLayout(2, 1));
-        
-
-        buttonSection = new JPanel(gridBagLayout);
-        gbc.weightx = 0.25;
-        gbc.weighty = 0.5;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        
+        this.configurarPaineis();
         leftPanel.add(buttonSection, BorderLayout.NORTH);
-        
-        textFieldSection = new JPanel(gridBagLayout);
-        textFieldSection.setPreferredSize(new Dimension(getWidth() / 4, getHeight() / 2));
-        gbc.weightx = 0.25;
-        gbc.weighty = 0.5;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.VERTICAL;
-
         leftPanel.add(textFieldSection, BorderLayout.CENTER);
-        
-        rightPanel = new JPanel(new BorderLayout());
-        
-        // TODO Fazer a tabela no painel direito
-        productGridSection = new JPanel(new FlowLayout());
-        productGridSection.setBackground(Color.BLACK);
-        gbc.weightx = 0.75;
-        gbc.weighty = 1;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-
-        scroller = new JScrollPane();
-
         rightPanel.add(productGridSection, BorderLayout.CENTER);
-        
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
-
-
-
 
         // CONFFIGURAÇÃO DOS COMPONENTES INTERNOS
         
@@ -112,7 +91,6 @@ public class Gui extends JFrame{
         
         importButton = this.configurarBotao("Importar", 2);
         buttonSection.add(importButton, gbc);
-
 
         // CONFIGURAÇÃO DOS CAMPOS DE TEXTO
         nameField = this.configurarCampo("Nome do produto", 0);
@@ -146,10 +124,35 @@ public class Gui extends JFrame{
 
         });
 
-        //add(productGridSection, BorderLayout.CENTER);
-        
         setVisible(true);
 
+    }
+
+    private void configurarPaineis(){
+        buttonSection = new JPanel(gridBagLayout);
+        gbc.weightx = 0.25;
+        gbc.weighty = 0.5;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+
+        textFieldSection = new JPanel(gridBagLayout);
+        textFieldSection.setPreferredSize(new Dimension(getWidth() / 4, getHeight() / 2));
+        gbc.weightx = gbc.weightx;
+        gbc.weighty = 1.0 - gbc.weighty;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+
+        productGridSection = new JPanel(new FlowLayout());
+        productGridSection.setBackground(Color.BLACK);
+        gbc.weightx = 1.0 - gbc.weightx;
+        gbc.weighty = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        scroller = new JScrollPane();
+        
     }
     
     public JButton configurarBotao(String buttonLabel, int gridy){
@@ -182,7 +185,7 @@ public class Gui extends JFrame{
 
     }
 
-    public void configurarFocoDoCampo(String placeHolder, JTextField campo){
+    private void configurarFocoDoCampo(String placeHolder, JTextField campo){
         campo.setText(placeHolder);
         campo.setForeground(Color.GRAY);
 
@@ -246,7 +249,6 @@ public class Gui extends JFrame{
     }
 
     private void adicionarProduto(){
-
         Produto novoProduto;
 
         try{    
@@ -256,7 +258,7 @@ public class Gui extends JFrame{
                 JOptionPane.showMessageDialog(this, "Novo produto adicionado com êxito:\n" + novoProduto, "Novo produto", JOptionPane.INFORMATION_MESSAGE);
             
         }catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(this, "Existem campos vazios. Por favor, preencha-os adequadamente", "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Existem campos vazios e/ou inválidos. Por favor, preencha-os adequadamente", "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
 
         }
 
