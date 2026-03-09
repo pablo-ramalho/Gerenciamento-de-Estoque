@@ -12,7 +12,7 @@ public class Tabela extends AbstractTableModel{
         nomeDaColuna[0] = "Nome";
         nomeDaColuna[1] = "Preço (R$)";
         nomeDaColuna[2] = "Peso (g)";
-        nomeDaColuna[3] = "Estoque disponível";
+        nomeDaColuna[3] = "Estoque";
 
         // ALIAS
         produtos = listaDeProdutos;
