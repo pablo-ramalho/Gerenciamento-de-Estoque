@@ -3,7 +3,6 @@ package Elements;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -101,8 +100,10 @@ public class Gui extends JFrame{
         
         stockField = this.configurarCampo("Estoque disponível", 3);
         textFieldSection.add(stockField, gbc);
-        
+
+        //  CONFIGURAÇÃO DA TABELA DE EXIBIÇÃO DE DADOS
         scrollableTable = this.configurarTabela();
+        productGridSection.add(scrollableTable, BorderLayout.CENTER);
         add(scrollableTable);
 
         // TRATAMENTO DE EVENTOS
@@ -144,7 +145,7 @@ public class Gui extends JFrame{
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         
-        productGridSection = new JPanel(new FlowLayout());
+        productGridSection = new JPanel(new BorderLayout());
         productGridSection.setBackground(Color.BLACK);
         gbc.weightx = 1.0 - gbc.weightx;
         gbc.weighty = 1;
