@@ -38,6 +38,7 @@ public class Gui extends JFrame{
     private JButton importButton;
     private Font fonteBotao;
     private Font fonteCampo;
+    private Font fonteTabela;
     private Color corBotao;
 
     private JPanel textFieldSection;
@@ -47,24 +48,20 @@ public class Gui extends JFrame{
     private JTextField stockField;
 
     private JPanel productGridSection;
-    private JScrollPane scroller;
     private List<Produto> listaDeProdutos;
     private Tabela tableModel;
     private JTable productGrid;
+    private JScrollPane scrollableTable;
     
     public Gui(){
         gbc = new GridBagConstraints();
         gridBagLayout = new GridBagLayout();
         fonteBotao = new Font("Arial", Font.BOLD, 36);
         fonteCampo = new Font("Arial", Font.PLAIN, 24);
+        fonteTabela = new Font("Arial", Font.BOLD, 20);
         corBotao = new Color(64, 224, 208);
-        productGrid = new JTable(tableModel);
         leftPanel = new JPanel(new GridLayout(2, 1));
         rightPanel = new JPanel(new BorderLayout());
-        scroller = new JScrollPane();
-        listaDeProdutos = new ArrayList<>();
-        tableModel = new Tabela(listaDeProdutos);
-        productGrid = new JTable(tableModel);
 
         setSize(1520, 1000);
         setLayout(new BorderLayout());
@@ -104,6 +101,9 @@ public class Gui extends JFrame{
         
         stockField = this.configurarCampo("Estoque disponível", 3);
         textFieldSection.add(stockField, gbc);
+        
+        scrollableTable = this.configurarTabela();
+        add(scrollableTable);
 
         // TRATAMENTO DE EVENTOS
         addButton.addActionListener(e -> {
@@ -143,15 +143,13 @@ public class Gui extends JFrame{
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
-
+        
         productGridSection = new JPanel(new FlowLayout());
         productGridSection.setBackground(Color.BLACK);
         gbc.weightx = 1.0 - gbc.weightx;
         gbc.weighty = 1;
         gbc.gridx = 0;
         gbc.gridy = 0;
-
-        scroller = new JScrollPane();
         
     }
     
@@ -245,6 +243,29 @@ public class Gui extends JFrame{
         priceField.setForeground(Color.GRAY);
         weightField.setForeground(Color.GRAY);
         stockField.setForeground(Color.GRAY);
+
+    }
+
+    private JScrollPane configurarTabela(){
+        JScrollPane scrollableTable;
+
+        listaDeProdutos = new ArrayList<>();
+        tableModel = new Tabela(listaDeProdutos);
+        productGrid = new JTable(tableModel);
+
+        productGrid.getColumnModel().getColumn(0).setPreferredWidth(700);
+        productGrid.getColumnModel().getColumn(1).setPreferredWidth(10);
+        productGrid.getColumnModel().getColumn(2).setPreferredWidth(10);
+        productGrid.getColumnModel().getColumn(3).setPreferredWidth(10);
+
+        productGrid.getTableHeader().setReorderingAllowed(false);
+        productGrid.getTableHeader().setForeground(Color.WHITE);
+        productGrid.getTableHeader().setBackground(new Color(50, 50, 50));
+        productGrid.getTableHeader().setFont(fonteTabela);
+
+        scrollableTable = new JScrollPane(productGrid);
+
+        return scrollableTable;
 
     }
 
