@@ -51,6 +51,8 @@ public class Gui extends JFrame{
     private Tabela tableModel;
     private JTable productGrid;
     private JScrollPane scrollableTable;
+
+    private static Integer toggleCellColor;
     
     public Gui(){
         gbc = new GridBagConstraints();
@@ -61,6 +63,7 @@ public class Gui extends JFrame{
         corBotao = new Color(64, 224, 208);
         leftPanel = new JPanel(new GridLayout(2, 1));
         rightPanel = new JPanel(new BorderLayout());
+        listaDeProdutos = new ArrayList<>();
 
         setSize(1520, 1000);
         setLayout(new BorderLayout());
@@ -109,7 +112,14 @@ public class Gui extends JFrame{
         // TRATAMENTO DE EVENTOS
         addButton.addActionListener(e -> {
             System.out.println("Adicionar clicado");
-            this.adicionarProduto();
+            
+            try{
+                this.adicionarProduto();
+
+            }catch(NumberFormatException nfe){
+                JOptionPane.showMessageDialog(this, nfe.getMessage(), "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
+
+            }
 
         });
 
@@ -249,11 +259,11 @@ public class Gui extends JFrame{
 
     private JScrollPane configurarTabela(){
         JScrollPane scrollableTable;
-
-        listaDeProdutos = new ArrayList<>();
+        
         tableModel = new Tabela(listaDeProdutos);
         productGrid = new JTable(tableModel);
 
+        //  CONFIGURA O CABEÇALHO DA TABELA (COLUNAS)
         productGrid.getColumnModel().getColumn(0).setPreferredWidth(700);
         productGrid.getColumnModel().getColumn(1).setPreferredWidth(10);
         productGrid.getColumnModel().getColumn(2).setPreferredWidth(10);
@@ -264,30 +274,34 @@ public class Gui extends JFrame{
         productGrid.getTableHeader().setBackground(new Color(50, 50, 50));
         productGrid.getTableHeader().setFont(fonteTabela);
 
+        //  CONFIGURA AS LINHAS DA TABELA
+        productGrid.setFont(fonteTabela);
+        productGrid.setRowHeight(25);
+        productGrid.setForeground(Color.WHITE);
+        productGrid.setBackground(new Color(60, 60, 60));
+
         scrollableTable = new JScrollPane(productGrid);
 
         return scrollableTable;
 
     }
 
-    private void adicionarProduto(){
+    private void adicionarProduto() throws NumberFormatException{
         Produto novoProduto;
 
         try{    
             novoProduto = new Produto(nameField.getText(), Float.parseFloat(priceField.getText()), Integer.parseInt(weightField.getText()), Integer.parseInt(stockField.getText()));
-
-            if(!(nameField.getText().isEmpty()) && !(priceField.getText().isEmpty()) && !(weightField.getText().isEmpty()) && !(stockField.getText().isEmpty()))
-                JOptionPane.showMessageDialog(this, "Novo produto adicionado com êxito:\n" + novoProduto, "Novo produto", JOptionPane.INFORMATION_MESSAGE);
             
+            JOptionPane.showMessageDialog(this, "Novo produto adicionado com êxito:\n" + novoProduto, "Novo produto", JOptionPane.INFORMATION_MESSAGE);
+            tableModel.adicionarLinha(novoProduto);
+
         }catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(this, "Existem campos vazios e/ou inválidos. Por favor, preencha-os adequadamente", "Erro ao adicionar o produto", JOptionPane.ERROR_MESSAGE);
+            throw new NumberFormatException("Existem campos vazios e/ou inválidos. Por favor, preencha-os adequadamente");
+
+        }finally{
+            this.resetarCampos();
 
         }
-
-        this.resetarCampos();
-
-        // TODO IMPLEMENTAR LÓGICA AO ADICIONAR O PRODUTO
-
 
     }
     
