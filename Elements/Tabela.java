@@ -15,7 +15,7 @@ public class Tabela extends AbstractTableModel{
         nomeDaColuna[3] = "Estoque";
 
         // ALIAS
-        produtos = listaDeProdutos;
+        listaDeProdutos = produtos;
 
     }
 
@@ -41,20 +41,21 @@ public class Tabela extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
 
         switch(columnIndex){
+
             case 0:
-                listaDeProdutos.get(rowIndex).getName();
-        
+                return listaDeProdutos.get(rowIndex).getName();
+
             case 1:
-                listaDeProdutos.get(rowIndex).getPrice();
+                return listaDeProdutos.get(rowIndex).getPrice();
 
             case 2:
-                listaDeProdutos.get(rowIndex).getWeight();
+                return listaDeProdutos.get(rowIndex).getWeight();
 
             case 3:
-                listaDeProdutos.get(rowIndex).getStock();
+                return listaDeProdutos.get(rowIndex).getStock();
 
             default:
-                return 0;
+                return null;
 
         }
 
@@ -80,6 +81,13 @@ public class Tabela extends AbstractTableModel{
                 return null;
 
         }
+
+    }
+
+    public void adicionarLinha(Produto novoProduto){
+        this.listaDeProdutos.add(novoProduto);
+
+        fireTableDataChanged();
 
     }
     
